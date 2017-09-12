@@ -16,7 +16,7 @@ import glob
 import random
 
 # colors for the bboxes
-COLORS = ['red', 'blue', 'olive', 'teal', 'cyan', 'green', 'black']
+COLORS = ['red', 'blue', 'cyan', 'green', 'black']
 # image sizes for the examples
 SIZE = 256, 256
 
@@ -78,18 +78,19 @@ class LabelTool():
 
         # choose class
         self.classname = StringVar()
-        self.classcandidate = ttk.Combobox(self.frame,state='readonly',textvariable=self.classname)
+        # self.classcandidate = ttk.Combobox(self.frame,state='readonly',textvariable=self.classname)
+        self.classcandidate = Entry(self.frame)
         self.classcandidate.grid(row=1,column=2)
-        if os.path.exists(self.classcandidate_filename):
-        	with open(self.classcandidate_filename) as cf:
-        		for line in cf.readlines():
-        			# print line
-        			self.cla_can_temp.append(line.strip('\n'))
+        # if os.path.exists(self.classcandidate_filename):
+        #   with open(self.classcandidate_filename) as cf:
+        #       for line in cf.readlines():
+        #           # print line
+        #           self.cla_can_temp.append(line.strip('\n'))
         #print self.cla_can_temp
-        self.classcandidate['values'] = self.cla_can_temp
-        self.classcandidate.current(0)
-        self.currentLabelclass = self.classcandidate.get() #init
-        self.btnclass = Button(self.frame, text = 'ComfirmClass', command = self.setClass)
+        # self.classcandidate['values'] = self.cla_can_temp
+        # self.classcandidate.current(0)
+        # self.currentLabelclass = self.classcandidate.get() #init
+        self.btnclass = Button(self.frame, text = 'Confirm Class', command = self.setClass)
         self.btnclass.grid(row=2,column=2,sticky = W+E)
 
         # showing bbox info & delete bbox
@@ -224,7 +225,7 @@ class LabelTool():
                     # print tmpId
                     self.bboxIdList.append(tmpId)
                     self.listbox.insert(END, '%s : (%d, %d) -> (%d, %d)' %(tmp[4],int(tmp[0]), int(tmp[1]), \
-                    												  int(tmp[2]), int(tmp[3])))
+                                                                      int(tmp[2]), int(tmp[3])))
                     self.listbox.itemconfig(len(self.bboxIdList) - 1, fg = COLORS[(len(self.bboxIdList) - 1) % len(COLORS)])
 
     def saveImage(self):
@@ -309,8 +310,8 @@ class LabelTool():
             self.loadImage()
 
     def setClass(self):
-    	self.currentLabelclass = self.classcandidate.get()
-    	print 'set label class to :',self.currentLabelclass
+        self.currentLabelclass = self.classcandidate.get()
+        print 'set label class to :',self.currentLabelclass
 
 ##    def setImage(self, imagepath = r'test2.png'):
 ##        self.img = Image.open(imagepath)
